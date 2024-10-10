@@ -91,7 +91,8 @@ nav.menu li {
     display: flex; 
     width: max-content; 
     height: 100px;
-    animation: aniScroll 20s linear infinite; 
+    animation: aniScroll 20s linear infinite;
+    list-style:none;
 }
 
 .pics {
@@ -114,24 +115,24 @@ nav.menu li {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); } 
 }
-
-.scroll-view {
-    display: flex; 
-    justify-content: flex-start;
-    align-items: center;
-    width: 2000px; 
-    height:500px;
+.scroll-container {
+    overflow-x: auto;
     margin-top: 30px;
-    overflow: auto;
-    white-space: nowrap;
-    overflow-y: hidden;
-    scrollbar-width:thin;
+    width: 100%;
+    scrollbar-width: thin; 
 }
 
+.scroll-view {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    white-space: nowrap;
+}
 
 .scroll-food {
     display: flex;
     list-style-type: none;
+    scroll-behavior: smooth;
 }
 
 .scroll-food li {
@@ -139,7 +140,23 @@ nav.menu li {
     margin-right: 30px;
 }
 
-.scroll img{
-width:500px;
+.scroll img {
+    width: 500px;
+}
 
+.click-scroll {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.click-scroll:first-of-type {
+    left: 0; 
+}
+
+.click-scroll:last-of-type {
+    right: 0; 
 }
