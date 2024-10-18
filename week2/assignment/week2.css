@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    background-color: #D3C0B5;
+    padding: 20px;
+}
+
+.left-side {
+    display: flex;
+}
+.left-side img {
+    width: 10%;
+    height: 10%;
+}
+
+.title h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right:100px; /*헤더 3등분... 이게맞나?*/
+
+}
+
+.right-side h2 {
+    font-size: 14px;
+    text-align: right;
+    white-space: nowrap; 
+    color:white;
+}
+
+.right-side {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
