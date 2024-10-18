@@ -20,9 +20,62 @@
     </header>
 
     <main>
-        <article class="name">
-            
-        </article>
+        <form class="filter">
+            <div class="name">
+            <label for="name">이름</label>
+            <input type="text" id="name" placeholder="이름을 입력하세요"/>
+            </div>
+
+            <div class="eng-name">
+            <label for="eng-name" >영문이름</label>
+            <input type="text" id="eng-name" placeholder="영문이름을 입력하세요"/>
+            </div>
+
+        <div class="grid-1">
+            <div class="github">
+            <label for="github">GitHub</label>
+            <input type="text" id="github" placeholder="GitHub ID를 입력하세요"/>
+            </div>
+
+            <div class="gender">
+            <label for="gender">성별</label>
+            <select name="gender" id="gender">
+                <option value="select-gender">성별선택</option>
+                <option value="woman">여자</option>
+                <option value="man">남자</option>
+            </select>
+            </div>
+
+            <div class="role">
+            <label for="role">역할</label>
+            <select name="role" id="role">
+                <option value="select-role">OB/YB 선택</option>
+                <option value="OB">OB</option>
+                <option value="YB">YB</option>
+            </select>
+            </div>
+        </div>
+
+        <div class="grid-2">
+
+            <div class="week1">
+            <label for="week1">1주차<br> 금잔디조</label>
+            <input type="week1" id="week1" placeholder="1주차 금잔디조를 입력하세요(1~9)"/>
+            </div>
+
+            <div class="week2">
+            <label for="week2">2주차<br>금잔디조</label>
+            <input type="text" id="week2" placeholder="2주차 금잔디조를 입력하세요(1~9)"/>
+            </div>
+        </div>
+        </form>
+
+
+    <div class="filter-button">
+        <button class="reset"> 초기화 </button>
+        <button class="search"> 검색 </button>
+    </div>   
+
     </main>
 
 
