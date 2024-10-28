@@ -159,3 +159,47 @@ selectDelete.onclick = () => {
 
     updateAllCheck(); // 삭제 후 전체 선택 상태 업데이트
 };
+
+
+// 모달 
+
+document.getElementById("add").addEventListener("click", () => {
+    document.getElementById("modalBackdrop").style.display = "block";
+    document.getElementById("addModal").style.display = "block";
+});
+
+
+document.getElementById("closeModal").addEventListener("click", closeAddModal);
+document.getElementById("modalBackdrop").addEventListener("click", closeAddModal);
+
+function closeAddModal() {
+    document.getElementById("modalBackdrop").style.display = "none";
+    document.getElementById("addModal").style.display = "none";
+}
+
+// 멤버 추가 기능
+document.getElementById("addMemberButton").addEventListener("click", () => {
+    const newMember = {
+        name: document.getElementById("addName").value,
+        englishName: document.getElementById("addEnglishName").value,
+        github: document.getElementById("addGithub").value,
+        gender: document.getElementById("addGender").value,
+        role: document.getElementById("addRole").value,
+        firstWeekGroup: document.getElementById("addFirstWeekGroup").value,
+        secondWeekGroup: document.getElementById("addSecondWeekGroup").value,
+    };
+
+    // 필수 입력 확인
+    const isComplete = Object.values(newMember).every(value => value !== "");
+    if (!isComplete) {
+        alert("모든 필드를 입력해주세요.");
+        return;
+    }
+
+    // 데이터 추가
+    const membersData = getMembersData();
+    membersData.push(newMember);
+    localStorage.setItem('membersData', JSON.stringify(membersData));
+    populateTable();
+    closeAddModal(); 
+});

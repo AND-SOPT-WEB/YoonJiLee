@@ -105,6 +105,50 @@
 
     <script type="module" src="week2.js"></script>
 
+    <div class="modal-backdrop" id="modalBackdrop" style="display: none;"></div>
+    <div class="modal" id="addModal" style="display: none;">
+        <button class="close-modal" id="closeModal">X</button>
+        <div class="modal-content">
+            <h3>회원 추가</h3>
+            <form id="addMemberForm">
+                <label class="modal-label" for="addName">이름</label>
+                <input type="text" id="addName" placeholder="이름을 입력하세요"/>
+    
+                <label class="modal-label" for="addEnglishName">영문 이름</label>
+                <input type="text" id="addEnglishName" placeholder="영문 이름을 입력하세요"/>
+    
+                <label class="modal-label" for="addGithub">GitHub ID</label>
+                <input type="text" id="addGithub" placeholder="GitHub ID를 입력하세요"/>
+    
+                <label class="modal-label" for="addGender">성별</label>
+                <select id="addGender">
+                    <option value="">성별 선택</option>
+                    <option value="male">남자</option>
+                    <option value="female">여자</option>
+                </select>
+    
+                <label class="modal-label" for="addRole">역할</label>
+                <select id="addRole">
+                    <option value="">OB/YB 선택</option>
+                    <option value="OB">OB</option>
+                    <option value="YB">YB</option>
+                </select>
+    
+                <label class="modal-label" for="addFirstWeekGroup">1주차 금잔디조</label>
+                <input type="number" id="addFirstWeekGroup" min="1" max="9" placeholder="1주차 금잔디조 (1~9)"/>
+    
+                <label class="modal-label" for="addSecondWeekGroup">2주차 금잔디조</label>
+                <input type="number" id="addSecondWeekGroup" min="1" max="9" placeholder="2주차 금잔디조 (1~9)"/>
+    
+                <button type="button" id="addMemberButton">추가</button>
+            </form>
+        </div>
+    </div>
+    
+</div>
+
+
+
 
     
 </body>
