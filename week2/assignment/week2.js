@@ -26,7 +26,7 @@ document.querySelector('.search').addEventListener('click', (event) => {
     };
     populateTable(filter);
 });
-
+/*
 // 필터링 
 function populateTable(filter = {}) {
     const membersData = getMembersData().filter(member => {
@@ -112,6 +112,86 @@ function populateTable(filter = {}) {
     document.querySelectorAll(".check").forEach((checkbox) => {
         checkbox.addEventListener("change", updateAllCheck);
     });
+}*/
+
+// 필터링 함수
+function filterMembersData(filter = {}) {
+    return getMembersData().filter(member => {
+        if (filter.name && !member.name.startsWith(filter.name)) return false;
+        if (filter.englishName && !member.englishName.startsWith(filter.englishName)) return false;
+        if (filter.github && !member.github.startsWith(filter.github)) return false;
+        if (filter.gender && filter.gender !== 'select-gender') {
+            const genderFilter = 
+                (filter.gender === '남자' || filter.gender === 'man') ? 'male' : 
+                (filter.gender === '여자' || filter.gender === 'woman') ? 'female' : null;
+            if (genderFilter && member.gender !== genderFilter) return false;
+        }
+        if (filter.role && filter.role !== 'select-role' && member.role !== filter.role) return false;
+        if (filter.firstWeekGroup && parseInt(member.firstWeekGroup) !== parseInt(filter.firstWeekGroup)) return false;
+        if (filter.secondWeekGroup && parseInt(member.secondWeekGroup) !== parseInt(filter.secondWeekGroup)) return false;
+
+        return true;
+    });
+}
+
+// 테이블 렌더링 함수
+function renderMembersTable(membersData) {
+    const tbody = document.querySelector('tbody');
+    tbody.innerHTML = ''; // <tbody>를 비우기
+
+    membersData.forEach(member => {
+        const row = document.createElement('tr');
+
+        // 체크박스 추가
+        const checkboxCell = document.createElement('td');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.classList.add("check");
+        checkboxCell.appendChild(checkbox);
+        row.appendChild(checkboxCell);
+
+        // 각 정보를 셀(td)로 추가
+        appendTableCell(row, member.name);
+        appendTableCell(row, member.englishName);
+        
+        // 깃허브 링크
+        const githubCell = document.createElement('td');
+        githubCell.textContent = member.github;
+        githubCell.style.textDecoration = 'underline';
+        githubCell.style.cursor = 'pointer';
+        githubCell.addEventListener('click', () => {
+            window.open(`https://github.com/${member.github}`, '_blank');
+        });
+        row.appendChild(githubCell);
+
+        appendTableCell(row, member.gender === 'male' ? '남자' : '여자');
+        appendTableCell(row, member.role);
+        appendTableCell(row, member.firstWeekGroup);
+        appendTableCell(row, member.secondWeekGroup);
+
+        tbody.appendChild(row);
+    });
+}
+
+// 체크박스 이벤트 초기화 함수
+function initializeCheckboxEvents() {
+    document.querySelectorAll(".check").forEach(checkbox => {
+        checkbox.addEventListener("change", updateAllCheck);
+    });
+}
+
+// 테이블 셀 생성 함수
+function appendTableCell(row, textContent) {
+    const cell = document.createElement('td');
+    cell.textContent = textContent;
+    row.appendChild(cell);
+}
+
+// 메인 함수
+function populateTable(filter = {}) {
+    const filteredData = filterMembersData(filter);
+    renderMembersTable(filteredData);
+    initializeCheckboxEvents();
 }
 
 // 초기화 기능
