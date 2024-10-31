@@ -1,7 +1,7 @@
 import { members } from "./data.js";
 
 // 데이터를 localStorage에 저장
-export function saveMembersData() {
+function saveMembersData() {
     localStorage.setItem('membersData', JSON.stringify(members));
 }
 
