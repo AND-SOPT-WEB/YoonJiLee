@@ -8,7 +8,6 @@ export function saveMembersData() {
 // 데이터 읽기
 export function getMembersData() {
     const membersData = JSON.parse(localStorage.getItem('membersData'));
-    console.log(membersData);
     return membersData;
 }
 
@@ -157,10 +156,10 @@ function renderMembersTable(membersData) {
         // 깃허브 링크
         const githubCell = document.createElement('td');
         githubCell.textContent = member.github;
-        githubCell.style.textDecoration = 'underline';
+        githubCell.style.textDecoration = 'underline'; //스타일주기!
         githubCell.style.cursor = 'pointer';
         githubCell.addEventListener('click', () => {
-            window.open(`https://github.com/${member.github}`, '_blank');
+            window.open(`https://github.com/${member.github}`, '_blank'); // 새 창에 열리기!
         });
         row.appendChild(githubCell);
 
@@ -187,7 +186,7 @@ function appendTableCell(row, textContent) {
     row.appendChild(cell);
 }
 
-// 메인 함수
+// 메인 테이블
 function populateTable(filter = {}) {
     const filteredData = filterMembersData(filter);
     renderMembersTable(filteredData);
@@ -205,7 +204,7 @@ document.querySelector('.reset').addEventListener('click', (event) => {
     document.getElementById('week1').value = '';
     document.getElementById('week2').value = '';
 
-    populateTable(); // 모든 데이터 표시
+    populateTable();
 });
 
 // 페이지 로드 시 테이블을 채우는 함수 호출
