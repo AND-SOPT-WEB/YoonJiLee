@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
+import LevelSelect from '../Game/LevelSelect';
+import Timer from '../Game/Timer';
 import Modal from '../Modal/Modal';
-import LevelSelect from './LevelSelect';
-import Timer from './Timer';
 
-
-function GameBoard() {
-  const [level, setLevel] = useState(1);
+function GameBoard({ level }) {
   const [numbers, setNumbers] = useState([]);
   const [nextNumber, setNextNumber] = useState(1);
   const [timer, setTimer] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    // 레벨이 변경될 때마다 숫자 초기화
     generateNumbers(level);
     resetGame();
   }, [level]);
 
   useEffect(() => {
-    // 타이머 작동
-    let timerId;
     if (isRunning) {
-      timerId = setInterval(() => {
+      timerRef.current = setInterval(() => {
         setTimer((prevTime) => prevTime + 0.01);
       }, 10);
+    } else if (!isRunning && timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-    return () => clearInterval(timerId);
+
+    return () => clearInterval(timerRef.current);
   }, [isRunning]);
 
   const generateNumbers = (level) => {
@@ -55,11 +55,14 @@ function GameBoard() {
     setTimer(0);
     setIsRunning(false);
     setShowModal(false);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
   };
 
   return (
     <BoardContainer>
-      <LevelSelect onLevelChange={(level) => setLevel(parseInt(level))} />
       <h2>다음 숫자: {nextNumber}</h2>
       <Timer time={timer} isRunning={isRunning} />
       <NumberGrid size={Math.sqrt(numbers.length)}>
