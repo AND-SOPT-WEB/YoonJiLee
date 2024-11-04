@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 
-function Timer() {
+const TimerDisplay = styled.div`
+  font-size: 16px;
+  color: #fff;
+`;
+
+function Timer({ isRunning }) {
   const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    let timer;
-    if (isRunning) {
-      timer = setInterval(() => {
-        setTime((prev) => prev + 0.01);
-      }, 10);
-    }
-    return () => clearInterval(timer);
+    if (!isRunning) return;
+
+    const timerId = setInterval(() => {
+      setTime(prevTime => prevTime + 0.01);
+    }, 10);
+
+    return () => clearInterval(timerId);
   }, [isRunning]);
 
-  const startTimer = () => setIsRunning(true);
-  const stopTimer = () => setIsRunning(false);
-
-  return (
-    <div>
-      <div>타이머: {time.toFixed(2)}초</div>
-    </div>
-  );
+  return <TimerDisplay>{time.toFixed(2)}</TimerDisplay>;
 }
 
 export default Timer;

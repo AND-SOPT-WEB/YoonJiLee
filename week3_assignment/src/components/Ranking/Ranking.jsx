@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Ranking.css';
 
 function Ranking() {
   const [rankings, setRankings] = useState([]);
