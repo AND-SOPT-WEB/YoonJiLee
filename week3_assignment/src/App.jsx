@@ -5,11 +5,12 @@ import Ranking from './components/Ranking/Ranking';
 
 function App() {
   const [view, setView] = useState('game');
+  const[level, setLevel]= useState(1); // Level 상태 추가
 
   return (
     <div>
-      <Header view={view} onChangeView={setView} />
-      {view === 'game' ? <GameBoard /> : <Ranking />}
+      <Header view={view} onChangeView={setView} level={level} setLevel={setLevel} />
+      {view === 'game' ? <GameBoard level={level} setLevel={setLevel} /> : <Ranking />}
     </div>
   );
 }
