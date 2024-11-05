@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import LevelSelect from '../Game/LevelSelect';
 import Timer from '../Game/Timer';
 
-function Header({ selectedButton, onChangeView, level, setLevel, gameState }) {
+function Header({ selectedButton, onChangeView, level, setLevel, gameState, time }) { // time 추가
   return (
     <HeaderContainer>
       <div><h2>1 to 50</h2></div>
@@ -14,7 +14,7 @@ function Header({ selectedButton, onChangeView, level, setLevel, gameState }) {
       {selectedButton === '게임' && (
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
           <LevelSelect level={level} onLevelChange={setLevel} />
-          <Timer isRunning={gameState.start} />
+          <Timer time={time} /> {/* time 전달 */}
         </div>
       )}
     </HeaderContainer>

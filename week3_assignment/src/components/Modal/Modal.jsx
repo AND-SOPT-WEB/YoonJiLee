@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
-function Modal({ time, onClose }) {
+function Modal({ time = 0, onClose }) {
   return ReactDOM.createPortal(
     <ModalOverlay>
       <ModalContent>
-        <span>게임 끝!</span>
+        <span>게임 종료!</span>
         <span>기록: {time.toFixed(2)}초</span>
         <button onClick={onClose}>닫기</button>
       </ModalContent>
@@ -43,16 +43,18 @@ const ModalContent = styled.div`
 
   span {
     font-size: 1.5rem;
-    color: #333;
+    color: black;
   }
 
-  button {
-    font-size: 1.2rem;
-    padding: 0.6rem 1.2rem;
-    border-radius: 5px;
-    background-color: var(--red);
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
+button {
+  font-size: 1.2rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0; /* 둥근 모서리를 없앰 */
+  background-color: var(--red);
+  color: black;
+  border: 2px solid black; 
+  cursor: pointer;
+  margin-top:1.5rem;
+}
+
 `;
