@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import LevelSelect from '../Game/LevelSelect';
 import Timer from '../Game/Timer';
 
-function Header({ selectedButton, onChangeView, level, setLevel, gameState, time }) { // time 추가
+function Header({ selectedButton, onChangeView, level, setLevel, gameState, time }) {
   return (
     <HeaderContainer>
       <div><h2>1 to 50</h2></div>

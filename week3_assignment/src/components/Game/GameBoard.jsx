@@ -4,10 +4,9 @@ import Modal from "../Modal/Modal";
 import { createPortal } from "react-dom";
 
 const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
-  // 레벨에 따라 그리드 크기 설정
-  const gridNumber = level === 1 ? 3 : level === 2 ? 4 : 5;
-  const halfNumber = gridNumber ** 2;
-  const maxNumber = halfNumber * 2;
+  const gridNumber = level === 1 ? 3 : level === 2 ? 4 : 5; // 레벨에 따라 3x3, 4x4, 5x5 설정
+  const halfNumber = gridNumber ** 2; // 초기 표시 숫자 수
+  const maxNumber = halfNumber * 2; // 전체 숫자 범위 (1 ~ maxNumber)
 
   const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
 
@@ -24,11 +23,11 @@ const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
       timer = setInterval(() => {
         setTime((prevTime) => prevTime + 0.01);
       }, 10);
-    } else if (!isRunning && time !== 0) {
+    } else {
       clearInterval(timer);
     }
     return () => clearInterval(timer);
-  }, [isRunning, setTime, time]);
+  }, [isRunning, setTime]);
 
   // 레벨 변경 시 게임 초기화
   useEffect(() => {
@@ -49,14 +48,14 @@ const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
         setIsRunning(true); // 타이머 시작
       }
       if (nextNumber === maxNumber) {
-        endGame();
+        endGame(); // 게임 종료
+        saveRanking(); // 랭킹 저장
         setIsRunning(false); // 타이머 중지
         setShowModal(true); // 모달 표시
         return;
       }
 
       setNextNumber((prev) => prev + 1);
-
       const updatedNumber = newNumbers.length > 0 ? newNumbers.pop() : null;
       setNumbers((prev) => {
         const updatedNumbers = [...prev];
@@ -64,6 +63,33 @@ const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
         return updatedNumbers;
       });
     }
+  };
+
+  const saveRanking = () => {
+    const timestamp = new Date().getTime(); // 현재 시각
+    const levelData = level; // 게임의 레벨
+    const playTime = time.toFixed(2); // 플레이 시간
+
+    // 저장할 데이터 구조
+    const newRankingEntry = {
+      timestamp,
+      level: levelData,
+      time: playTime,
+    };
+
+    // 기존 랭킹 데이터 가져오기
+    const existingRankings = JSON.parse(localStorage.getItem("rankingData")) || [];
+    
+    // 새로운 데이터 추가
+    existingRankings.push(newRankingEntry);
+    
+    // 랭킹 데이터 정렬 (레벨 내림차순, 시간 오름차순)
+    existingRankings.sort((a, b) => {
+      return b.level === a.level ? parseFloat(a.time) - parseFloat(b.time) : b.level - a.level;
+    });
+
+    // 랭킹 데이터를 localStorage에 저장
+    localStorage.setItem("rankingData", JSON.stringify(existingRankings));
   };
 
   const closeModal = () => {
