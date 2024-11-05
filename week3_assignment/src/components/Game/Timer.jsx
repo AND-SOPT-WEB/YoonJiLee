@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-const TimerDisplay = styled.div`
-  font-size: 16px;
-  color: #fff;
-`;
-
 function Timer({ isRunning }) {
   const [time, setTime] = useState(0);
 
@@ -13,7 +8,7 @@ function Timer({ isRunning }) {
     if (!isRunning) return;
 
     const timerId = setInterval(() => {
-      setTime(prevTime => prevTime + 0.01);
+      setTime((prevTime) => prevTime + 0.01);
     }, 10);
 
     return () => clearInterval(timerId);
@@ -23,3 +18,8 @@ function Timer({ isRunning }) {
 }
 
 export default Timer;
+
+const TimerDisplay = styled.div`
+  font-size: 16px;
+  color: #fff;
+`;

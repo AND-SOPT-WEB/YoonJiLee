@@ -2,33 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ModalContent = styled.div`
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
-`;
-
-function Modal({ onClose }) {
+function Modal({ time, onClose }) {
   return ReactDOM.createPortal(
-    <ModalOverlay onClick={onClose}>
+    <ModalOverlay>
       <ModalContent>
-        <p>게임 종료!</p>
-        <button onClick={onClose}>확인</button>
+        <span>게임 끝!</span>
+        <span>기록: {time.toFixed(2)}초</span>
+        <button onClick={onClose}>닫기</button>
       </ModalContent>
     </ModalOverlay>,
     document.getElementById('modal-root')
@@ -36,3 +16,43 @@ function Modal({ onClose }) {
 }
 
 export default Modal;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 16rem;
+  height: 12rem;
+  border-radius: 5px;
+  background: white;
+  text-align: center;
+  padding: 1rem;
+
+  span {
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  button {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    background-color: var(--red);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+`;

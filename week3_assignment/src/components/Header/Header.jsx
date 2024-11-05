@@ -3,18 +3,18 @@ import styled from '@emotion/styled';
 import LevelSelect from '../Game/LevelSelect';
 import Timer from '../Game/Timer';
 
-function Header({ view, onChangeView, level, setLevel }) {
+function Header({ selectedButton, onChangeView, level, setLevel, gameState }) {
   return (
     <HeaderContainer>
       <div><h2>1 to 50</h2></div>
       <div>
-        <MenuButton active={view === 'game'} onClick={() => onChangeView('game')}>게임</MenuButton>
-        <MenuButton active={view === 'ranking'} onClick={() => onChangeView('ranking')}>랭킹</MenuButton>
+        <MenuButton active={selectedButton === '게임'} onClick={() => onChangeView('게임')}>게임</MenuButton>
+        <MenuButton active={selectedButton === '랭킹'} onClick={() => onChangeView('랭킹')}>랭킹</MenuButton>
       </div>
-      {view === 'game' && (
+      {selectedButton === '게임' && (
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
-          <LevelSelect level={level} onLevelChange={(newLevel) => setLevel(parseInt(newLevel))} />
-          <Timer />
+          <LevelSelect level={level} onLevelChange={setLevel} />
+          <Timer isRunning={gameState.start} />
         </div>
       )}
     </HeaderContainer>

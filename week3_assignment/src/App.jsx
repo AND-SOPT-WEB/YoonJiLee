@@ -1,37 +1,44 @@
-import React, { useState } from 'react';
-import Header from './components/Header/Header';
-import GameBoard from './components/Game/GameBoard';
+import { useState } from "react";
+import Header from "./components/Header/Header";
+import GameBoard from "./components/Game/GameBoard";
+import Ranking from "./components/Ranking/Ranking";
 
 function App() {
+  const [selectedButton, setSelectedButton] = useState("게임"); // '게임' 또는 '랭킹' 선택
   const [level, setLevel] = useState(1);
-  const [view, setView] = useState('game'); // 'game' 또는 'ranking' 뷰 선택
-  const [isGameRunning, setIsGameRunning] = useState(false);
-
-  const handleLevelChange = (newLevel) => {
-    setLevel(newLevel); // level을 업데이트하면 GameBoard도 이에 따라 그리드가 변경되게
-  };
-
-  const handleViewChange = (newView) => {
-    setView(newView);
-  };
+  const [gameState, setGameState] = useState({ start: false, reset: false });
 
   const startGame = () => {
-    setIsGameRunning(true);
+    setGameState({ start: true, reset: false });
     console.log("Game started!");
-    // 타이머 시작 등의 추가 로직을 작성할 수 있습니다.
   };
 
   const endGame = () => {
-    setIsGameRunning(false);
+    setGameState({ start: false, reset: false });
     console.log("Game ended!");
-    // 타이머 종료 등의 추가 로직을 작성할 수 있습니다.
+  };
+
+  const resetGame = () => {
+    setGameState({ start: false, reset: true });
+    console.log("Game reset!");
   };
 
   return (
-    <div>
-      <Header view={view} onChangeView={handleViewChange} level={level} setLevel={handleLevelChange} />
-      {view === 'game' && <GameBoard level={level} startGame={startGame} endGame={endGame} />}
-    </div>
+    <>
+      <Header
+        selectedButton={selectedButton}
+        onChangeView={setSelectedButton}
+        level={level}
+        setLevel={setLevel}
+        resetGame={resetGame}
+        gameState={gameState}
+      />
+      {selectedButton === "게임" ? (
+        <GameBoard level={level} startGame={startGame} endGame={endGame} />
+      ) : (
+        <Ranking />
+      )}
+    </>
   );
 }
 

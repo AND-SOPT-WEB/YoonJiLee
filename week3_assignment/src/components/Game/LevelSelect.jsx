@@ -12,7 +12,8 @@ const Select = styled.select`
 
 function LevelSelect({ onLevelChange }) {
   return (
-    <Select onChange={(e) => onLevelChange(e.target.value)}>
+    //이벤트 객체 e를 onLevelChange(e.target.value)로 전달
+    <Select onChange={(e) => onLevelChange(e.target.value)}> 
       <option value={1}>Level 1</option>
       <option value={2}>Level 2</option>
       <option value={3}>Level 3</option>
