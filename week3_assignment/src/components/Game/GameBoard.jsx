@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import Modal from "../Modal/Modal";
 import { createPortal } from "react-dom";
 
-const GameBoard = ({ level, startGame, endGame, setTime, time }) => { // time 추가
+const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
+  // 레벨에 따라 그리드 크기 설정
   const gridNumber = level === 1 ? 3 : level === 2 ? 4 : 5;
   const halfNumber = gridNumber ** 2;
   const maxNumber = halfNumber * 2;
@@ -29,7 +30,7 @@ const GameBoard = ({ level, startGame, endGame, setTime, time }) => { // time �
     return () => clearInterval(timer);
   }, [isRunning, setTime, time]);
 
-  // 레벨 변경 시 초기화
+  // 레벨 변경 시 게임 초기화
   useEffect(() => {
     const initialNumbers = Array.from({ length: halfNumber }, (_, i) => i + 1);
     const additionalNumbers = Array.from({ length: halfNumber }, (_, i) => i + halfNumber + 1);
@@ -123,8 +124,8 @@ const DefaultButton = styled.button`
 
 const NumberButton = styled(DefaultButton)`
   font-size: 2rem;
-  background-color: ${({ num, halfNumber }) => (num > halfNumber ? "var(--red)" : "var(--orange)")};
-  color: black;
+  background-color: ${({ num, halfNumber }) => (num > halfNumber ? "var(--green)" : "var(--blue)")};
+  color: white;
   cursor: pointer;
 
   &:active {
