@@ -1,106 +1,118 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from '@emotion/styled';
-import LevelSelect from '../Game/LevelSelect';
-import Timer from '../Game/Timer';
-import Modal from '../Modal/Modal';
+import React, { useEffect, useState } from "react";
+import styled from "@emotion/styled";
+import Modal from "../Modal/Modal";
+import { createPortal } from "react-dom";
 
-function GameBoard({ level }) {
-  const [numbers, setNumbers] = useState([]);
+const GameBoard = ({ level, startGame, endGame }) => {
+  const gridNumber = level + 2; // 3x3, 4x4, 5x5 설정
+  const halfNumber = gridNumber ** 2; // 초기 표시 숫자 수
+  const maxNumber = halfNumber * 2; // 전체 숫자 범위 (1 ~ maxNumber)
+
+  const initialNumbers = Array.from({ length: halfNumber }, (_, i) => i + 1);
+  const additionalNumbers = Array.from({ length: halfNumber }, (_, i) => i + halfNumber + 1);
+
+  const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
+
   const [nextNumber, setNextNumber] = useState(1);
-  const [timer, setTimer] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
+  const [numbers, setNumbers] = useState(() => shuffleArray([...initialNumbers]));
+  const [newNumbers, setNewNumbers] = useState(() => shuffleArray([...additionalNumbers]));
   const [showModal, setShowModal] = useState(false);
-  const timerRef = useRef(null);
 
   useEffect(() => {
-    generateNumbers(level);
-    resetGame();
+    setNextNumber(1);
+    setNumbers(shuffleArray([...initialNumbers]));
+    setNewNumbers(shuffleArray([...additionalNumbers]));
   }, [level]);
 
-  useEffect(() => {
-    if (isRunning) {
-      timerRef.current = setInterval(() => {
-        setTimer((prevTime) => prevTime + 0.01);
-      }, 10);
-    } else if (!isRunning && timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-
-    return () => clearInterval(timerRef.current);
-  }, [isRunning]);
-
-  const generateNumbers = (level) => {
-    const maxNumber = level === 1 ? 9 : level === 2 ? 16 : 25;
-    const initialNumbers = Array.from({ length: maxNumber }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
-    setNumbers(initialNumbers);
-  };
-
-  const handleNumberClick = (number) => {
-    if (number === nextNumber) {
-      if (number === 1) {
-        setIsRunning(true); // 타이머 시작
-        setTimer(0); // 타이머 초기화
+  const handleNumberClick = (num, index) => {
+    if (num === nextNumber) {
+      if (num === 1) startGame(); // 첫 클릭 시 타이머 시작
+      if (nextNumber === maxNumber) {
+        endGame(); // 마지막 숫자 클릭 시 게임 종료
+        setShowModal(true); // 모달 표시
+        return;
       }
-      setNextNumber(nextNumber + 1);
-      if (number === numbers.length) {
-        setIsRunning(false);
-        setShowModal(true);
-      }
+
+      setNextNumber((prev) => prev + 1);
+
+      const updatedNumber = newNumbers.length > 0 ? newNumbers.pop() : null;
+      setNumbers((prev) => {
+        const updatedNumbers = [...prev];
+        updatedNumbers[index] = updatedNumber;
+        return updatedNumbers;
+      });
     }
   };
 
-  const resetGame = () => {
-    setNextNumber(1);
-    setTimer(0);
-    setIsRunning(false);
+  const closeModal = () => {
     setShowModal(false);
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
+    setNextNumber(1);
+    setNumbers(shuffleArray([...initialNumbers]));
+    setNewNumbers(shuffleArray([...additionalNumbers]));
   };
 
   return (
-    <BoardContainer>
-      <h2>다음 숫자: {nextNumber}</h2>
-      <Timer time={timer} isRunning={isRunning} />
-      <NumberGrid size={Math.sqrt(numbers.length)}>
-        {numbers.map((num, idx) => (
-          <NumberButton key={idx} onClick={() => handleNumberClick(num)}>{num}</NumberButton>
-        ))}
-      </NumberGrid>
-      {showModal && <Modal onClose={resetGame} message={`걸린 시간: ${timer.toFixed(2)}초`} />}
-    </BoardContainer>
+    <Container>
+      <h2>다음 숫자 : {nextNumber}</h2>
+      <Grid gridNumber={gridNumber}>
+        {numbers.map((num, index) =>
+          num ? (
+            <NumberButton
+              key={index}
+              onClick={() => handleNumberClick(num, index)}
+              num={num}
+              halfNumber={halfNumber}
+            >
+              {num}
+            </NumberButton>
+          ) : (
+            <DefaultButton key={index} />
+          )
+        )}
+      </Grid>
+      {showModal &&
+        createPortal(
+          <Modal onClose={closeModal} />,
+          document.getElementById("modal-root")
+        )
+      }
+    </Container>
   );
-}
+};
+  
 
 export default GameBoard;
 
-const BoardContainer = styled.div`
+const Container = styled.section`
+  margin: 8rem auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-`;
+  gap: 3rem;
+  width: fit-content;
+  font-size: 1.6rem;
 
-const NumberGrid = styled.div`
+`;
+const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(${props => props.size}, 1fr);
-  gap: 10px;
-  margin-top: 20px;
+  grid-template-columns: repeat(${({ gridNumber }) => gridNumber}, 1fr);
+  gap: 1rem;
+
 `;
 
-const NumberButton = styled.button`
-  width: 50px;
-  height: 50px;
-  background-color: #3d887e;
-  color: #fff;
-  font-size: 18px;
-  border: none;
-  cursor: pointer;
+const DefaultButton = styled.button`
+  width: 6rem;
+  height: 6rem;
+`;
 
-  &:hover {
-    background-color: #2e6d5b;
+const NumberButton = styled(DefaultButton)`
+  font-size: 2rem;
+  background-color: ${({ num, halfNumber }) => (num > halfNumber ? "var(--red)" : "var(--orange)")};
+  color: white;
+  cursor: pointer;
+  color:black;
+
+  &:active {
+    opacity: 0.3;
   }
 `;
