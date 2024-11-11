@@ -39,7 +39,6 @@ const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
     setNextNumber(1);
     setNumbers(shuffleArray([...initialNumbers]));
     setNewNumbers(shuffleArray([...additionalNumbers]));
-    setTime(0); // 타이머 초기화
     setIsRunning(false); // 타이머 중지
   }, [numericLevel, halfNumber, setTime]);
 
