@@ -21,12 +21,10 @@ function App() {
 
   const startGame = () => {
     setIsGameRunning(true);
-    console.log("Game started!");
   };
 
   const endGame = () => {
     setIsGameRunning(false);
-    console.log("Game ended!");
   };
 
   return (
