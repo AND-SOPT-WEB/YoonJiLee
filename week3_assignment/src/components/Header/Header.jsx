@@ -26,7 +26,7 @@ export default Header;
 const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 1rem;
   background-color: #1c2a35;
   color: #fff;
 `;
