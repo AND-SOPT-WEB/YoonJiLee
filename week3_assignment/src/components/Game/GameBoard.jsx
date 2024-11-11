@@ -4,9 +4,11 @@ import Modal from "../Modal/Modal";
 import { createPortal } from "react-dom";
 
 const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
-  const gridNumber = level === 1 ? 3 : level === 2 ? 4 : 5; // 레벨에 따라 3x3, 4x4, 5x5 설정
-  const halfNumber = gridNumber ** 2; // 초기 표시 숫자 수
-  const maxNumber = halfNumber * 2; // 전체 숫자 범위 (1 ~ maxNumber)
+  // level 값을 숫자형으로 변환
+  const numericLevel = parseInt(level, 10);
+  const gridNumber = numericLevel === 1 ? 3 : numericLevel === 2 ? 4 : 5; // 레벨에 따라 3x3, 4x4, 5x5 설정
+  const halfNumber = gridNumber ** 2; 
+  const maxNumber = halfNumber * 2; 
 
   const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
 
@@ -39,7 +41,7 @@ const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
     setNewNumbers(shuffleArray([...additionalNumbers]));
     setTime(0); // 타이머 초기화
     setIsRunning(false); // 타이머 중지
-  }, [level, halfNumber, setTime]);
+  }, [numericLevel, halfNumber, setTime]);
 
   const handleNumberClick = (num, index) => {
     if (num === nextNumber) {
@@ -67,7 +69,7 @@ const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
 
   const saveRanking = () => {
     const timestamp = new Date().getTime(); // 현재 시각
-    const levelData = level; // 게임의 레벨
+    const levelData = numericLevel; // 게임의 레벨
     const playTime = time.toFixed(2); // 플레이 시간
 
     // 저장할 데이터 구조
