@@ -116,12 +116,16 @@ const GameBoard = ({ level, startGame, endGame, setTime, time }) => {
             <DefaultButton key={index} />
           )
         )}
-      </Grid>
-      {showModal &&
-        createPortal(
-          <Modal time={time} onClose={closeModal} />, // time prop 전달
-          document.getElementById("modal-root")
-        )}
+    </Grid>
+      {showModal && (() => {
+        const modalRoot = document.getElementById("modal-root");
+        if (!modalRoot) {
+          return null; 
+        }
+        return createPortal(
+          <Modal time={time} onClose={closeModal} />,modalRoot
+        );
+      })()}
     </Container>
   );
 };
