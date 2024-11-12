@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import JoinNameForm from '../components/Join/JoinNameForm';
-import JoinPasswordForm from '../components/Join/JoinPasswordForm';
-import JoinHobbyForm from '../components/Join/JoinHobbyForm';
+import JoinNameForm from '../components/Join/JoinId';
+import JoinPasswordForm from '../components/Join/JoinPw';
+import JoinHobbyForm from '../components/Join/JoinHobby';
 
 const JoinPage: React.FC = () => {
   const [step, setStep] = useState(1);
