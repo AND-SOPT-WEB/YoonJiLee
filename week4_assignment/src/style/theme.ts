@@ -1,12 +1,12 @@
-import { DefaultTheme } from "styled-components";
+import { DefaultTheme } from 'styled-components';
 
-const colors={
-    black: '#1e1fld',
-    yello: '#edb83c',
+const colors = {
+  black: '#1e1f1d',
+  yellow: '#edb83c',
 };
 
-export type ColorsTypes= typeof colors;
-
-export const theme: DefaultTheme={
-    colors,
+export const theme: DefaultTheme = {
+  colors,
 };
+
+export default theme;
