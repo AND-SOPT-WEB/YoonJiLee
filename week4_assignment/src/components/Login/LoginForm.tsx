@@ -8,13 +8,17 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      await axios.post('/api/login', { username, password });
+      await axios.post('http://211.188.53.75:8080/login', { username, password });
       alert('로그인 성공');
-    } catch {
-      alert('로그인 실패');
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        alert(`로그인 실패: ${error.response.data.message || '잘못된 요청'}`);
+      } else {
+        alert('로그인 실패');
+      }
     }
   };
-
+  
   return (
     <FormContainer>
       <Input
@@ -63,7 +67,7 @@ const Button = styled.button`
   padding: 0.75rem;
   font-size: 1rem; 
   background-color: ${({ theme }) => theme.colors.mainColor};
-  color: #white;
+  color: white;
   border: none;
   border-radius: 0.25rem; 
   cursor: pointer;

@@ -3,10 +3,11 @@ import styled from 'styled-components';
 
 interface Props {
   nextStep: () => void;
+  password: string;
+  setPassword: (password: string) => void;
 }
 
-const JoinPw: React.FC<Props> = ({ nextStep }) => {
-  const [password, setPassword] = useState('');
+const JoinPw: React.FC<Props> = ({ nextStep, password, setPassword }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleNext = () => {
@@ -40,21 +41,20 @@ const JoinPw: React.FC<Props> = ({ nextStep }) => {
 
 export default JoinPw;
 
-
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 18.75rem; 
+  width: 18.75rem;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 0.75rem; 
-  font-size: 1rem; 
-  border: 0.063rem solid #ddd; 
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 0.063rem solid #ddd;
   border-radius: 0.25rem;
-  margin-bottom: 1.25rem; 
+  margin-bottom: 1.25rem;
   outline: none;
   &:focus {
     border-color: #3b82f6;
@@ -63,12 +63,12 @@ const Input = styled.input`
 
 const NextButton = styled.button`
   width: 100%;
-  padding: 0.75rem; 
+  padding: 0.75rem;
   font-size: 1rem;
   background-color: ${({ theme }) => theme.colors.background};
   color: #888;
   border: none;
-  border-radius: 0.25rem; 
+  border-radius: 0.25rem;
   cursor: pointer;
   transition: background-color 0.3s;
   &:disabled {

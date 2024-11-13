@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
   nextStep: () => void;
+  username: string;
+  setUsername: (username: string) => void;
 }
 
-const JoinId: React.FC<Props> = ({ nextStep }) => {
-  const [name, setName] = useState('');
-
+const JoinId: React.FC<Props> = ({ nextStep, username, setUsername }) => {
   const handleNext = () => {
-    if (name.length <= 8) nextStep();
+    if (username.length <= 8) nextStep();
     else alert('아이디는 8자 이하여야 합니다');
   };
 
@@ -18,10 +18,10 @@ const JoinId: React.FC<Props> = ({ nextStep }) => {
       <Input
         type="text"
         placeholder="아이디"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
-      <NextButton onClick={handleNext} disabled={!name}>
+      <NextButton onClick={handleNext} disabled={!username}>
         다음
       </NextButton>
     </FormContainer>
@@ -29,7 +29,6 @@ const JoinId: React.FC<Props> = ({ nextStep }) => {
 };
 
 export default JoinId;
-
 
 const FormContainer = styled.div`
   display: flex;
@@ -41,20 +40,20 @@ const FormContainer = styled.div`
 const Input = styled.input`
   width: 100%;
   padding: 0.75rem;
-  font-size: 1rem; 
-  border: 0.063rem solid #ddd; 
-  border-radius: 0.25rem; 
-  margin-bottom: 1.25rem; /
+  font-size: 1rem;
+  border: 0.063rem solid #ddd;
+  border-radius: 0.25rem;
+  margin-bottom: 1.25rem;
   outline: none;
   &:focus {
-    border-color: #3b82f6; 
+    border-color: #3b82f6;
   }
 `;
 
 const NextButton = styled.button`
   width: 100%;
-  padding: 0.75rem; 
-  font-size: 1rem; 
+  padding: 0.75rem;
+  font-size: 1rem;
   background-color: ${({ theme }) => theme.colors.background};
   color: #888;
   border: none;

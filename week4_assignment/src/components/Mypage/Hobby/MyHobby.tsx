@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getUserHobby } from '../../../apis/userApi';
+import { getMyHobby } from '../../../apis/user'; // 정확한 경로 확인
 
 const MyHobby: React.FC = () => {
   const [userId, setUserId] = useState(''); 
@@ -8,7 +8,7 @@ const MyHobby: React.FC = () => {
   useEffect(() => {
     const fetchHobby = async () => {
       try {
-        const userHobby = await getUserHobby('yourUserId'); 
+        const userHobby = await getMyHobby(userId); 
         setHobby(userHobby);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
@@ -17,11 +17,11 @@ const MyHobby: React.FC = () => {
     };
 
     fetchHobby();
-  }, []);
+  }, [userId]);
 
   const handleSearch = async () => {
     try {
-      const userHobby = await getUserHobby(userId);
+      const userHobby = await getMyHobby(userId);
       setHobby(userHobby);
     } catch (error) {
       console.error('사용자 취미 검색 오류:', error);
