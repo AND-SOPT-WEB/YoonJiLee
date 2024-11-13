@@ -22,23 +22,25 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding: 10px;
+  padding: 0.625rem; 
 `;
 
 const Title = styled.h2`
-  margin-bottom: 20px;
-  color: black;
+  margin-bottom: 1.25rem; 
+  font-size: 1.5rem; 
+  color: ${({ theme }) => theme.colors.textColor || 'black'};
 `;
 
 const InfoText = styled.p`
-  margin-top: 20px;
-  color: black;
+  margin-top: 1.25rem; 
+  font-size: 0.875rem; 
+  color: ${({ theme }) => theme.colors.textColor || 'black'};
 `;
 
 const StyledLink = styled.a`
-  color: #888;          
-  text-decoration: underline;  
+  color: #888;
+  text-decoration: underline;
   &:hover {
-    color: #666;      
+    color: #666;
   }
 `;
