@@ -62,8 +62,8 @@ const Button = styled.button`
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem; 
-  background-color: ${({ theme }) => theme.colors.background};
-  color: #888;
+  background-color: ${({ theme }) => theme.colors.mainColor};
+  color: #white;
   border: none;
   border-radius: 0.25rem; 
   cursor: pointer;
@@ -73,7 +73,7 @@ const Button = styled.button`
     cursor: not-allowed;
   }
   &:hover:enabled {
-    background-color: ${({ theme }) => theme.colors.mainColor};
-    color: white;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: black;
   }
 `;
