@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // useNavigate 훅으로 navigate 함수 생성
 
   const handleLogin = async () => {
     try {
-      await axios.post('http://211.188.53.75:8080/login', { username, password });
+      const response = await axios.post('http://211.188.53.75:8080/login', { username, password });
+      const token = response.data.token;
+      localStorage.setItem('token', token);
       alert('로그인 성공');
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        alert(`로그인 실패: ${error.response.data.message || '잘못된 요청'}`);
-      } else {
-        alert('로그인 실패');
-      }
+      navigate('/mypage'); // 로그인 성공 시 마이페이지로 이동
+    } catch {
+      alert('로그인 실패');
     }
   };
-  
+
   return (
     <FormContainer>
       <Input

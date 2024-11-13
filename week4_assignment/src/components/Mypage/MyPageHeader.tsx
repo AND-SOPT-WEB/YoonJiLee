@@ -8,41 +8,41 @@ interface MyPageHeaderProps {
 
 const MyPageHeader: React.FC<MyPageHeaderProps> = ({ activeTab, setActiveTab }) => {
   return (
-    <Header>
-      <Tab
-        onClick={() => setActiveTab('hobby')}
-        isActive={activeTab === 'hobby'}
-      >
+    <HeaderContainer>
+      <TabButton onClick={() => setActiveTab('hobby')} isActive={activeTab === 'hobby'}>
         취미
-      </Tab>
-      <Tab
-        onClick={() => setActiveTab('info')}
-        isActive={activeTab === 'info'}
-      >
+      </TabButton>
+      <TabButton onClick={() => setActiveTab('info')} isActive={activeTab === 'info'}>
         내 정보
-      </Tab>
-    </Header>
+      </TabButton>
+    </HeaderContainer>
   );
 };
 
 export default MyPageHeader;
 
-const Header = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
   background-color: ${({ theme }) => theme.colors.mainColor};
   padding: 10px;
+  border-bottom: 1px solid #ddd;
 `;
 
-const Tab = styled.button<{ isActive: boolean }>`
+const TabButton = styled.button<{ isActive: boolean }>`
   flex: 1;
-  background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.accentColor: theme.colors.mainColor};
+  background-color: ${({ isActive, theme }) => (isActive ? theme.colors.accentColor : theme.colors.mainColor)};
   color: white;
   padding: 10px;
+  font-size: 16px;
+  font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
-
+  
   &:hover {
     background-color: ${({ theme }) => theme.colors.accentColor};
   }
