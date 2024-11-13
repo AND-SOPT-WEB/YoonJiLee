@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import HobbyPage from '../components/Mypage/Hobby/HobbyPage';
-import InfoPage from '../components/Mypage/Info/InfoPage';
+import HobbyPage from '../components/Mypage/Hobby/MyHobby';
+import InfoPage from '../components/Mypage/Info/MyInfo';
 import MyPageHeader from '../components/Mypage/MyPageHeader';
 
 const MyPage: React.FC = () => {

@@ -10,7 +10,7 @@ const LoginForm: React.FC = () => {
     try {
       await axios.post('/api/login', { username, password });
       alert('로그인 성공');
-      // 페이지 이동 또는 토큰 저장 등 추가 작업
+    
     } catch {
       alert('로그인 실패');
     }
@@ -30,10 +30,11 @@ export default LoginForm;
 const Form = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content:center;
 `;
 
 const Button = styled.button`
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.mainColor};
   color: white;
   padding: 10px;
   margin-top: 10px;
@@ -42,6 +43,6 @@ const Button = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.accentColor};
   }
 `;

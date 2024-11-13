@@ -1,12 +1,11 @@
 import { DefaultTheme } from 'styled-components';
 
 const colors = {
-  primary: '#6D4C41',
-  secondary: '#A1887F',
+  mainColor: '#6D4C41',  
+  accentColor: '#A1887F',  
   background: '#FAFAFA',
+  textColor: '#333333',
   error: '#FF5252',
-  black: '#1e1f1d',  
-  yellow: '#edb83c',   
 };
 
 export const theme: DefaultTheme = {
