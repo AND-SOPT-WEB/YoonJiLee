@@ -8,7 +8,7 @@ const LoginPage: React.FC = () => {
       <Title>로그인</Title>
       <Login />
       <InfoText>
-        아직 회원이 아니신가요? <a href="/join">회원가입</a>
+        아직 회원이 아니신가요? <StyledLink href="/join">회원가입</StyledLink>
       </InfoText>
     </PageContainer>
   );
@@ -16,23 +16,29 @@ const LoginPage: React.FC = () => {
 
 export default LoginPage;
 
-
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh; 
-  background-color: ${({ theme }) => theme.colors.mainColor};
+  height: 100vh;
   padding: 10px;
 `;
 
 const Title = styled.h2`
   margin-bottom: 20px;
-  color: white;
+  color: blak;
 `;
 
 const InfoText = styled.p`
   margin-top: 20px;
-  color: white;
+  color: black;
+`;
+
+const StyledLink = styled.a`
+  color: #888;          
+  text-decoration: underline;  
+  &:hover {
+    color: #666;      
+  }
 `;
