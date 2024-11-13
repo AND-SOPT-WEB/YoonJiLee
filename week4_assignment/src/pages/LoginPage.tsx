@@ -27,7 +27,7 @@ const PageContainer = styled.div`
 
 const Title = styled.h2`
   margin-bottom: 20px;
-  color: blak;
+  color: black;
 `;
 
 const InfoText = styled.p`
