@@ -14,8 +14,11 @@ const Login = () => {
   // 로그인 함수
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
-    await PostLogin(name, password);
+    const response = await PostLogin(name, password);
     navigate("/mypage");
+    localStorage.setItem("token",response.data.result.token)
+    console.log(response.data.result.token);
+
   };
 
   return (
