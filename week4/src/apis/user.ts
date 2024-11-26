@@ -24,7 +24,11 @@ export const PostLogin = async (name: string, password: string) => {
 };
 
 // POST : 회원가입
-export const PostSignUp = async (name: string, password: string, hobby: string) => {
+export const PostSignUp = async (
+  name: string,
+  password: string,
+  hobby: string
+) => {
   try {
     const response = await instance.post("/user", {
       username: name,
@@ -48,6 +52,7 @@ export const GetMyHobby = async () => {
   // eslint-disable-next-line no-useless-catch
   try {
     const response = await instance.get(`/user/my-hobby`);
+    console.log(response.data);
     return response.data.result.hobby;
   } catch (error) {
     throw error;
@@ -72,15 +77,25 @@ export const GetUserHobby = async (userNo: string) => {
 // PUT: 유저 정보 변경
 export const PutUserInfo = async (hobby: string, password: string) => {
   try {
+    if (!hobby && !password) {
+      alert("변경할 정보를 입력해주세요.");
+      return;
+    }
+
     const response = await instance.put(`/user`, {
-      hobby: hobby,
-      password: password,
+      hobby: hobby || undefined, // 빈 문자열이 아닌 경우에만 포함
+      password: password || undefined,
     });
+
     alert("정보가 성공적으로 변경되었습니다.");
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      if (error.response?.status === 400 && error.response?.data?.code === "00") {
+      console.error("에러 응답:", error.response?.data);
+      if (
+        error.response?.status === 400 &&
+        error.response?.data?.code === "00"
+      ) {
         alert("취미 또는 비밀번호를 8자 이하로 입력해주세요.");
       }
     } else {

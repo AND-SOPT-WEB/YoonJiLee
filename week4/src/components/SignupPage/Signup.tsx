@@ -17,7 +17,8 @@ const SignUp = () => {
 
   const [nameError, setNameError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
-  const [confirmPasswordError, setConfirmPasswordError] = useState<boolean>(false);
+  const [confirmPasswordError, setConfirmPasswordError] =
+    useState<boolean>(false);
   const [hobbyError, setHobbyError] = useState<boolean>(false);
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -64,7 +65,8 @@ const SignUp = () => {
   const signUp = async (e: React.FormEvent) => {
     e.preventDefault();
     await PostSignUp(name, password, hobby);
-    //navigate("/");
+    localStorage.setItem("hobby", hobby);
+    navigate("/");
   };
 
   return (
@@ -116,11 +118,20 @@ const SignUp = () => {
               value={confirmPassword}
               onChange={handleChange}
             />
-            {passwordError && <Error>비밀번호를 8자 이하로 입력해주세요.</Error>}
-            {confirmPasswordError && <Error>비밀번호가 일치하지 않습니다.</Error>}
+            {passwordError && (
+              <Error>비밀번호를 8자 이하로 입력해주세요.</Error>
+            )}
+            {confirmPasswordError && (
+              <Error>비밀번호가 일치하지 않습니다.</Error>
+            )}
             <Button
               onClick={handleStep}
-              disabled={!password || !confirmPassword || passwordError || confirmPasswordError}
+              disabled={
+                !password ||
+                !confirmPassword ||
+                passwordError ||
+                confirmPasswordError
+              }
             >
               다음
             </Button>
@@ -139,9 +150,7 @@ const SignUp = () => {
               autoComplete="off"
             />
             {hobbyError && <Error>취미는 8자 이하로 입력해주세요.</Error>}
-            <Button disabled={!hobby || hobbyError}>
-              회원가입
-            </Button>
+            <Button disabled={!hobby || hobbyError}>회원가입</Button>
           </>
         )}
       </SignUpForm>

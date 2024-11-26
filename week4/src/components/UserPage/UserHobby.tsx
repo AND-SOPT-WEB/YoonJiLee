@@ -8,42 +8,60 @@ import { GetMyHobby, GetUserHobby } from "../../apis/user";
 const UserHobby = () => {
   const [myHobby, setMyHobby] = useState<string>("");
   const [userNo, setUserNo] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<{ userNo: string; hobby: string }>({
+  const [searchResult, setSearchResult] = useState<{
+    userNo: string;
+    hobby: string;
+  }>({
     userNo: "",
     hobby: "",
   });
 
   // 내 취미 가져오기
   useEffect(() => {
-    const getMyHobby = async () => {
-      const hobby = await GetMyHobby();
-      setMyHobby(hobby);
-    };
-
-    getMyHobby();
+    const storedHobby = localStorage.getItem("hobby");
+    console.log("로컬 스토리지에서 가져온 취미:", storedHobby);
+    if (storedHobby) {
+      setMyHobby(storedHobby);
+    } else {
+      const fetchHobby = async () => {
+        try {
+          const hobby = await GetMyHobby();
+          console.log("API에서 가져온 취미:", hobby);
+          setMyHobby(hobby);
+        } catch (error) {
+          console.error("취미 가져오기 실패:", error);
+        }
+      };
+      fetchHobby();
+    }
   }, []);
 
-  // 사용자 번호 입력 값 관리 함수
+  // 입력값 변경 핸들러
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUserNo(e.target.value);
   };
 
-  // 다른 사용자의 취미 검색 함수
+  // 다른 사람의 취미 검색
   const searchUserHobby = async () => {
     if (!userNo) {
       alert("사용자 번호를 입력해주세요.");
       return;
     }
-
-    const hobby = await GetUserHobby(userNo);
-    setSearchResult({ userNo, hobby });
+    try {
+      console.log("검색 요청 사용자 번호:", userNo);
+      const hobby = await GetUserHobby(userNo);
+      console.log("검색 결과 취미:", hobby);
+      setSearchResult({ userNo, hobby });
+    } catch (error) {
+      console.error("취미 검색 실패:", error);
+    }
   };
 
   return (
     <Container>
       <Title>취미</Title>
       <Label>나의 취미</Label>
-      <HobbyText>{myHobby}</HobbyText>
+      <HobbyText>{myHobby || "취미 정보를 불러올 수 없습니다."}</HobbyText>
       <Label htmlFor="userNo">다른 사람들의 취미</Label>
       <Input
         id="userNo"

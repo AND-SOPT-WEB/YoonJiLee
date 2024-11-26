@@ -32,7 +32,12 @@ const UserInfo = () => {
     <Container>
       <Title>내 정보 수정하기</Title>
       <Label htmlFor="newPassword">새 비밀번호</Label>
-      <Input id="newPassword" type="password" value={newPassword} onChange={handlePasswordChange} />
+      <Input
+        id="newPassword"
+        type="password"
+        value={newPassword}
+        onChange={handlePasswordChange}
+      />
       <Label htmlFor="newHobby">새 취미</Label>
       <Input
         id="newHobby"
