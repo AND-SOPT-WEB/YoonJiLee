@@ -2,14 +2,15 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import Theme from "../../styles/theme";
-import { Title, Input, Button, Container } from "../../styles/common";
-
+import { Title, Button, Container } from "../../styles/common";
 import { PostLogin } from "../../apis/user";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   // 로그인 함수
   const login = async (e: React.FormEvent) => {
@@ -31,12 +32,20 @@ const Login = () => {
           onChange={(e) => setName(e.target.value)}
           autoComplete="off"
         />
-        <Input
-          placeholder="비밀번호"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <PasswordWrapper>
+          <Input
+            placeholder="비밀번호"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <PasswordToggle
+            onClick={() => setShowPassword((prev) => !prev)}
+            type="button"
+          >
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
+          </PasswordToggle>
+        </PasswordWrapper>
         <Button>로그인</Button>
       </LoginForm>
       <SignupLink to="/signup">회원가입</SignupLink>
@@ -52,6 +61,26 @@ const LoginForm = styled.form`
   gap: 1rem;
 `;
 
+const PasswordWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const PasswordToggle = styled.button`
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: ${Theme.color.gray};
+
+  &:hover {
+    color: ${Theme.color.black};
+  }
+`;
+
 const SignupLink = styled(Link)`
   margin: 0 auto;
   width: fit-content;
@@ -63,4 +92,14 @@ const SignupLink = styled(Link)`
   &:hover {
     color: ${Theme.color.black};
   }
+`;
+
+const Input = styled.input`
+  padding: 1rem 1rem;
+  padding-right: 2rem;
+  border: 1px solid ${Theme.color.gray};
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 `;
