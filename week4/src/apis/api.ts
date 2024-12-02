@@ -6,8 +6,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
+      //  token을 헤더에 직접 설정
       config.headers.token = accessToken;
     }
     return config;

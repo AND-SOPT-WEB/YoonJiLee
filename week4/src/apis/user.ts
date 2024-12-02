@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import instance from "./api";
 import axios from "axios";
 
@@ -8,6 +9,8 @@ export const PostLogin = async (name: string, password: string) => {
       username: name,
       password: password,
     });
+
+    // localStorage.setItem("accessToken", response.data.result.token);
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -48,17 +51,16 @@ export const PostSignUp = async (
 };
 
 // GET: 내 취미 조회
+
 export const GetMyHobby = async () => {
-  // eslint-disable-next-line no-useless-catch
   try {
     const response = await instance.get(`/user/my-hobby`);
-    console.log(response.data);
     return response.data.result.hobby;
   } catch (error) {
+    console.error("error");
     throw error;
   }
 };
-
 // GET: 다른 사람의 취미 조회
 export const GetUserHobby = async (userNo: string) => {
   try {

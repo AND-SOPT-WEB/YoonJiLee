@@ -15,7 +15,7 @@ const Login = () => {
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await PostLogin(name, password);
-    localStorage.setItem("accessToken", response.data.result.token); // 키 이름을 accessToken으로 변경
+    localStorage.setItem("accessToken", response.data.result.token);
     console.log(response.data.result.token);
     navigate("/mypage");
   };
